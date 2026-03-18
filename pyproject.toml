@@ -12,6 +12,13 @@ dependencies = [
     "openai>=1.0.0",
 ]
 
+[project.scripts]
+llmapping = "llmapping.cli:main"
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "DEBUG"
+
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0.0",

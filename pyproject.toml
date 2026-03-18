@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "llmapping"
+name = "llmcast"
 version = "0.1.0"
-description = "Use LLM to convert data from one schema to another"
+description = "Use LLM to cast data from one schema to another"
 license = "MIT"
 requires-python = ">=3.9"
 dependencies = [
@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-llmapping = "llmapping.cli:main"
+llmcast = "llmcast.cli:main"
 
 [tool.pytest.ini_options]
 log_cli = true

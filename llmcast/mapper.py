@@ -44,7 +44,7 @@ def _extract_function(code: str) -> str:
     return "\n".join(lines)
 
 
-class Llmapping:
+class Llmcast:
     """Use an LLM to convert data from one schema to another.
 
     Step 1: Ask the LLM how to map source schema -> target schema (generates a Python function).

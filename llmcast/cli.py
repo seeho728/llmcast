@@ -7,12 +7,12 @@ import sys
 import httpx
 from openai import OpenAI
 
-from llmapping import Llmapping
+from llmcast import Llmcast
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        prog="llmapping",
+        prog="llmcast",
         description="LLM을 사용하여 데이터를 다른 스키마로 변환합니다.",
     )
     parser.add_argument("source", help="소스 데이터 JSON 문자열 또는 파일 경로 (- 이면 stdin)")
@@ -32,7 +32,7 @@ def main() -> None:
 
     http_client = httpx.Client(verify=False)
     client = OpenAI(**client_kwargs, http_client=http_client)
-    mapper = Llmapping(client=client, model=args.model, verbose=args.verbose)
+    mapper = Llmcast(client=client, model=args.model, verbose=args.verbose)
 
     result = mapper.convert(source, target)
     print(json.dumps(result, ensure_ascii=False, indent=2))

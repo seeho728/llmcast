@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from typing import Any
 from unittest.mock import MagicMock
 
-from llmapping import Llmapping
+from llmcast import Llmcast
 
 
 # ---------------------------------------------------------------------------
@@ -48,7 +48,7 @@ class TestConvertSimple:
             "    }\n"
         )
         client = _make_client(code)
-        mapper = Llmapping(client=client, verbose=True)
+        mapper = Llmcast(client=client, verbose=True)
 
         source = {"first_name": "John", "last_name": "Doe", "age": 30}
         result = mapper.convert(source, {"fullName": "", "years": 0})
@@ -59,7 +59,7 @@ class TestConvertSimple:
     def test_custom_model(self):
         code = "def transform(item):\n    return {'out': item.get('in', 0)}\n"
         client = _make_client(code)
-        mapper = Llmapping(client=client, model="gpt-4o", verbose=True)
+        mapper = Llmcast(client=client, model="gpt-4o", verbose=True)
 
         mapper.convert({"in": 1}, {"out": 0})
 
@@ -79,7 +79,7 @@ class TestConvertNested:
             "    }\n"
         )
         client = _make_client(code)
-        mapper = Llmapping(client=client, verbose=True)
+        mapper = Llmcast(client=client, verbose=True)
 
         source = {"userName": "Alice", "userEmail": "alice@example.com"}
         result = mapper.convert(source, {"user": {"name": "", "contact": {"email": ""}}})
@@ -97,7 +97,7 @@ class TestConvertList:
             '    return {"name": item.get("title", "")}\n'
         )
         client = _make_client(code)
-        mapper = Llmapping(client=client, verbose=True)
+        mapper = Llmcast(client=client, verbose=True)
 
         source = [{"title": "A"}, {"title": "B"}, {"title": "C"}]
         result = mapper.convert(source, [{"name": ""}])
@@ -113,7 +113,7 @@ class TestConvertList:
             '    return {"name": item.get("title", ""), "active": True}\n'
         )
         client = _make_client(code)
-        mapper = Llmapping(client=client, verbose=True)
+        mapper = Llmcast(client=client, verbose=True)
 
         source = [{"title": "X"}]
         result = mapper.convert(source, [{"name": "", "active": True}])
@@ -130,7 +130,7 @@ class TestCodeExtraction:
             "```"
         )
         client = _make_client(code)
-        mapper = Llmapping(client=client, verbose=True)
+        mapper = Llmcast(client=client, verbose=True)
 
         result = mapper.convert({"x": 1}, {"a": 0})
         assert result == {"a": 1}
@@ -143,7 +143,7 @@ class TestEdgeCases:
             '    return {"fullName": item.get("first_name", ""), "years": item.get("age", 0)}\n'
         )
         client = _make_client(code)
-        mapper = Llmapping(client=client, verbose=True)
+        mapper = Llmcast(client=client, verbose=True)
 
         result = mapper.convert({}, {"fullName": "", "years": 0})
         assert result == {"fullName": "", "years": 0}
@@ -151,7 +151,7 @@ class TestEdgeCases:
     def test_temperature_is_zero(self):
         code = "def transform(item):\n    return {'a': 1}\n"
         client = _make_client(code)
-        mapper = Llmapping(client=client, verbose=True)
+        mapper = Llmcast(client=client, verbose=True)
         mapper.convert({"x": 1}, {"a": 0})
 
         call_kwargs = client.chat.completions.create.call_args

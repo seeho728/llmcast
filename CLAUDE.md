@@ -15,9 +15,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 .venv/bin/pytest tests/test_mapper.py::TestConvertSimple::test_flat_mapping
 
 # CLI usage
-.venv/bin/llmapping source.json target.json -v
-.venv/bin/llmapping '{"key":"value"}' '{"new_key":""}' --model gpt-4o
-cat source.json | .venv/bin/llmapping - target.json
+.venv/bin/llmcast source.json target.json -v
+.venv/bin/llmcast '{"key":"value"}' '{"new_key":""}' --model gpt-4o
+cat source.json | .venv/bin/llmcast - target.json
 ```
 
 ## Architecture
@@ -30,8 +30,8 @@ cat source.json | .venv/bin/llmapping - target.json
 This means the LLM is called **once** regardless of dataset size. For list inputs, only the first item is sent as a sample.
 
 **Key files:**
-- `llmapping/mapper.py` — `Llmapping` class with `convert()` (public API) and `_generate_mapping_function()` (LLM call)
-- `llmapping/cli.py` — CLI entry point, handles JSON string/file/stdin input and SSL workaround (`verify=False`)
+- `llmcast/mapper.py` — `Llmcast` class with `convert()` (public API) and `_generate_mapping_function()` (LLM call)
+- `llmcast/cli.py` — CLI entry point, handles JSON string/file/stdin input and SSL workaround (`verify=False`)
 - `tests/test_mapper.py` — Mock-based tests using fake OpenAI client that returns pre-written transform code
 
 **Design decisions:**
